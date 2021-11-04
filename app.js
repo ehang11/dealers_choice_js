@@ -13,17 +13,22 @@ app.get('/', (req, res) => {
     `<!DOCTYPE html>
     <html>
     <head>
-    <title>World's Tallest Buildings (2021) </title>
+    <div class="container">
+    <img src="/skyline.png"/> <h1 class ="bottom-left"> World's Tallest Buildings (2021) </h1> 
+    </div>
+    <title> </title>
     <link rel="stylesheet" href="/style.css" />
+    
     </head>
-    <body>ß
+
+    <body>
     <div class="news-list">
-        <header><img src="/tallest-building.jpeg"/>Top 15 Tallest Buildings</header>
+       <header> Top 15 Tallest Buildings </header>
         ${choice.map(post => `
         <div>
             <p>
-            <a href='/posts/${post.id}'><span class="news-position">${post.id}. ▲</span>${post.title}</a>
-            <small>(by ${post.name})</small>
+            <a href='/posts/${post.id}'><span class="news-position">${post.id}. ▲</span>${post.name}</a>
+            <small> ${post.location} </small>
             </p>
             
         </div>`
@@ -41,6 +46,6 @@ const PORT = 1500;
 //add app listener for logging feedback 
 app.listen(PORT, () => {
     //log the app listener for the port
-    console.log(`Àpp listening in port ${PORT}`);
+    console.log(`Àpp listening in port http://localhost:${PORT}`);
 });
 
