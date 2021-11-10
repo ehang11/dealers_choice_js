@@ -4,7 +4,7 @@ const dealerChoice = require('./dealers_choice');
 const app = express();
 
 app.use(morgan('dev'));
-app.use(express.static('public'));
+app.use(express.static('./public'));
 
 app.get('/', (req, res) => {
     const choice = dealerChoice.list();
@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
         ${choice.map(post => `
         <div>
             <p>
-            <a href='/posts/${post.id}'><span class="news-position">${post.id}. ▲</span>${post.name}</a>
+            <a href='/posts/${post.id}'><span class="news-position"> #${post.id}. </span>${post.name}</a>
             <small> ${post.location} </small>
             </p>
             
@@ -38,6 +38,54 @@ app.get('/', (req, res) => {
     </html>`
 
     res.send(html);
+});
+
+app.get("/posts/:id", (req, res, next) => {
+    const buildingID = dealerChoice.find(req.params.id);
+    const choice = dealerChoice.list();
+
+    if(!buildingID) {
+    const pageNotFound = 
+    `<!DOCTYPE html>
+    <html>
+    <head> PAGE NOT FOUND </head>
+    </html>
+    `
+    res.send(pageNotFound);
+    }
+
+    else {
+    const buildingInfoHTML = 
+    `<!DOCTYPE html>
+    <html>
+    <head>
+    <div class="container">
+    
+    </div>
+    <title> </title>
+    <link rel="stylesheet" href="/style.css" />
+    
+    </head>
+
+    <body>
+    <p >
+                  
+                  <h1> ${buildingID.id}. ${buildingID.name} </h1>
+                    <ul> 
+                        <li> Location: ${buildingID.location} </li> 
+                        <li> Year Completed: ${buildingID.yearCompleted} </li> 
+                        <li> Floors: ${buildingID.floors} </li> 
+                        <li> Altitude: ${buildingID.altitude} </li> 
+                       
+                    </ul>
+                 
+                </p>
+                <img src="/${buildingID.id}.jpeg" max-width="150px" height="500px" /> 
+    </body>
+    </html>`
+    res.send(buildingInfoHTML);
+    }
+
 });
 
 
